@@ -73,6 +73,19 @@ module FitbitClient
         get_json(path_user_version('/activities/favorite'))
       end
 
+      # The Get Activity Logs List endpoint retrieves a list of a user's
+      # activity log entries before or after a given day with offset and
+      # limit using units in the unit system which corresponds
+      # to the Accept-Language header provided.
+      def activity_logs_list(before_date, after_date, options = {})
+        if before_date
+          params = { 'beforeDate' => before_date, 'sort' => 'desc', 'limit' => '20', 'offset' => '0' }
+        elsif after_date
+          params = { 'afterDate' => after_date, 'sort' => 'asc', 'limit' => '20', 'offset' => '0' }
+        end
+        get_json(path_user_version('/activities/list', options), params)
+      end
+
       # The Add Favorite Activity endpoint adds the activity with the given ID
       # to user's list of favorite activities.
       #
